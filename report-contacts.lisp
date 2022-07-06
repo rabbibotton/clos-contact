@@ -4,11 +4,11 @@
     (cc-db :reader cc-db)
 ))
 (defun create-report-contacts (clog-obj &key (hidden nil) (class nil) (html-id nil) (auto-place t))
-  (let ((panel (change-class (clog:create-div clog-obj :content "<div id=\"CLOGB38553083771\" style=\"box-sizing: content-box; position: static; left: 38px; top: 39px;\"></div><table id=\"CLOGB38553088092\" class=\"w3-table-all\" style=\"box-sizing: content-box; position: static; left: 84px; top: 143px;\"></table>"
+  (let ((panel (change-class (clog:create-div clog-obj :content "<div style=\"box-sizing: content-box; position: static; left: 38px; top: 39px;\" id=\"CLOGB3866134974\" data-clog-name=\"cc-db\"></div><table class=\"w3-table-all\" style=\"box-sizing: content-box; position: static; left: 84px; top: 143px;\" id=\"CLOGB3866134975\" data-clog-name=\"table-contact\"></table>"
          :hidden hidden :class class :html-id html-id :auto-place auto-place) 'report-contacts)))
-    (setf (slot-value panel 'table-contact) (attach-as-child clog-obj "CLOGB38553088092" :clog-type 'CLOG:CLOG-DB-TABLE :new-id t))
-    (setf (slot-value panel 'cc-db) (attach-as-child clog-obj "CLOGB38553083771" :clog-type 'CLOG:CLOG-DATABASE :new-id t))
-    (let ((target (cc-db panel))) (declare (ignorable target)) (setf (database-connection target) (dbi:connect :sqlite3  :database-name "/home/dbotton/common-lisp/clos-contact/clos-contact.db")))
-    (set-on-header (table-contact panel) (lambda (target) (declare (ignorable target)) (create-child target "<tr class='w3-green'><th>Row ID</th><th>Name</th><th>Nick Name</th><th>Phone</th><th>E-mail</th></tr>")))
+    (setf (slot-value panel 'table-contact) (attach-as-child clog-obj "CLOGB3866134975" :clog-type 'CLOG:CLOG-DB-TABLE :new-id t))
+    (setf (slot-value panel 'cc-db) (attach-as-child clog-obj "CLOGB3866134974" :clog-type 'CLOG:CLOG-DATABASE :new-id t))
+    (let ((target (cc-db panel))) (declare (ignorable target)) (setf (database-connection target) (dbi:connect :sqlite3  :database-name *database*)))
+    (clog:set-on-header (table-contact panel) (lambda (target) (declare (ignorable target)) (create-child target "<tr class='w3-green'><th>Row ID</th><th>Name</th><th>Nick Name</th><th>Phone</th><th>E-mail</th></tr>")))
     (let ((target (table-contact panel))) (declare (ignorable target)) (setf (clog-database target) (clog-database (cc-db panel)))  (setf (table-name target) "contact") (setf (where-clause target) "") (setf (order-by target) "") (setf (limit target) "") (setf (row-id-name target) "rowid") (setf (table-columns target) '(rowid name nickname phone email))(get-row target panel))
     panel))

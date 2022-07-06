@@ -140,8 +140,12 @@
 	   (full-screen (create-gui-menu-full-screen menu-bar)))
       (declare (ignore icon-item help-about full-screen)))))
 
+(defparameter *database* "")
+
 (defun start-app ()
   (initialize 'on-new-window
    :static-root (merge-pathnames "./www/"
-		  (asdf:system-source-directory :clos-contact)))
+				 (asdf:system-source-directory :clos-contact)))
+  (setf *database* (format nil "~A/clos-contact.db"
+			   (asdf:system-source-directory :clos-contact)))
   (open-browser))
