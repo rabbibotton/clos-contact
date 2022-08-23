@@ -12,3 +12,11 @@
 	       (:file "report-contacts")
 	       (:file "report-events")))
 
+(asdf:defsystem #:clos-contact/tools
+  :defsystem-depends-on (:clog)
+  :depends-on (#:clos-contact #:clog/tools)
+  :components ((:clog-file "config-event-types")
+               (:clog-file "contact-event")
+               (:clog-file "manage-contacts")
+               (:clog-file "report-contacts")
+               (:clog-file "report-events")))
