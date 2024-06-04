@@ -5,6 +5,7 @@
   :version "0.0.0"
   :serial t
   :depends-on (#:clog)
+  :entry-point "clos-contact:start-app"
   :components ((:file "clos-contact")
 	       (:file "config-event-types")
 	       (:file "manage-contacts")
